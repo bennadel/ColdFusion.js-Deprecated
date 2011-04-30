@@ -10,4 +10,6 @@ onRequestEnd()
 onSessionEnd()
 onApplicationEnd()
 
+These event handlers are defined in the Application.js file - a root-level module that exports these methods in a single constructor. None of the methods are requires. They are only used if they are present.
+
 Like the ColdFusion application framework, session management can be managed on a per-request basis. Cookies can be overriden so that session cookies can be encrypted. 
