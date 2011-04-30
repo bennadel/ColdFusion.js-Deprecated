@@ -12,14 +12,14 @@ module.exports = function( request, response ){
 	this.name = "ColdFusionNodeJSApp";
 	
 	// I am the amount of time (in seconds) the application can sit idle.
-	this.applicationTimeout = (5 * 60);
+	this.applicationTimeout = 10;
 	
 	// I determine whether or not session management is being used for 
 	// this page request. This can be turned on or off for each request.
 	this.sessionManagement = true;
 	
 	// I am the amount of time (in seconds) the session can sit idle.
-	this.sessionTimeout = (1 * 10);
+	this.sessionTimeout = 5;
 	
 	// I determine if the session cookies should be set automatically.
 	// If false, we will need to manually set the cookies.
@@ -27,7 +27,7 @@ module.exports = function( request, response ){
 	
 	// I am the amount of time the request can run before it is forced to
 	// end (optional - exclude this for an open-ended response).
-	this.requestTimeout = 1;
+	this.requestTimeout = 5;
 
 
 	// -- Event handlers. -- //
@@ -82,7 +82,7 @@ module.exports = function( request, response ){
 		response.setHeader( "content-type", "text/html" );
 		response.write( "<h1>ColdFusion.js On Node.js</h1>" );
 		response.write( "<p>Hello - this is page request " + request.session.get( "hitCount" ) + ".</p>" );
-		// response.end( "<p>Word up.</p>" );
+		response.end( "<p>Word up!!.</p>" );
 			
 	}
 	
@@ -118,9 +118,18 @@ module.exports = function( request, response ){
 	// the error occurred during an asynchronous callback, this 
 	// Application.js instance might not even be the one that started
 	// the action that ended up raising the exception.
-	this.onError = function( error, request, response ){
+	this._onError = function( error, request, response ){
 		
 		console.log( "Uh oh! an error occurred!" );
+		
+		// Check to see if there is a response associated with this
+		// error. 
+		if (response){
+			
+			// Output the error.
+			response.write( "An error has occurred: " + error.message );
+
+		}
 		
 	}
 	
