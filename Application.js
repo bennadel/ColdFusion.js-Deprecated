@@ -6,10 +6,7 @@ module.exports = function( request, response ){
 
 
 	// Define the application settings.
-	//
-	// NOTE: This name property isn't currently used for anything since each 
-	// node instance will service just one application.
-	this.name = "ColdFusionNodeJSApp";
+	this.name = "ColdFusion.js Test App";
 	
 	// I am the amount of time (in seconds) the application can sit idle.
 	this.applicationTimeout = 10;
@@ -30,8 +27,9 @@ module.exports = function( request, response ){
 	this.requestTimeout = 5;
 
 
-	// -- Event handlers. -- //
-	
+	// ------------------------------------------------------ //
+	// ------------------------------------------------------ //
+
 
 	// I initialize the application.
 	this.onApplicationStart = function( request, response, callback ){
@@ -52,6 +50,8 @@ module.exports = function( request, response ){
 		
 		request.session.set( "hitCount", 0 );
 		
+		response.cookies.set( "foo", "bar" );
+		
 		return( callback() );
 		
 	}
@@ -62,10 +62,17 @@ module.exports = function( request, response ){
 		
 		console.log( "[Request Start]" );
 		
-		var hitCount = request.session.get( "hitCount" );
+		request.session.hitCount++;
 		
-		request.session.set( "hitCount", ++hitCount );
+		if (request.session.hitCount == 4){
+
+			response.cookies.remove( "foo" );
+
+		}
 		
+		request.session.set( "blam", "blammy" );
+		request.session.blam = "floozy";
+		request.session.remove( "blam" );
 		
 		
 		// Indicate that we want the request to load.
