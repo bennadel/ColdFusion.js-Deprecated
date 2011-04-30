@@ -6,8 +6,9 @@ module.exports = function( request, response ){
 
 
 	// Define the application settings.
-	// NOTE: This isn't actually used for anything since each node instance
-	// will service just one application.
+	//
+	// NOTE: This name property isn't currently used for anything since each 
+	// node instance will service just one application.
 	this.name = "ColdFusionNodeJSApp";
 	
 	// I am the amount of time (in seconds) the application can sit idle.
@@ -65,6 +66,8 @@ module.exports = function( request, response ){
 		
 		request.session.set( "hitCount", ++hitCount );
 		
+		
+		
 		// Indicate that we want the request to load.
 		return( callback( true ) );
 		
@@ -79,7 +82,7 @@ module.exports = function( request, response ){
 		response.setHeader( "content-type", "text/html" );
 		response.write( "<h1>ColdFusion.js On Node.js</h1>" );
 		response.write( "<p>Hello - this is page request " + request.session.get( "hitCount" ) + ".</p>" );
-		response.end( "<p>Word up.</p>" );
+		// response.end( "<p>Word up.</p>" );
 			
 	}
 	
@@ -109,11 +112,20 @@ module.exports = function( request, response ){
 	}
 	
 	
-	// I handle any global errors.
-	/*
-	this.onError = function( request, response, callback ){
-		// .....
+	// I handle any global errors. 
+	//
+	// NOTE: The request / response objects may NOT be present. If 
+	// the error occurred during an asynchronous callback, this 
+	// Application.js instance might not even be the one that started
+	// the action that ended up raising the exception.
+	this.onError = function( error, request, response ){
+		
+		console.log( "Uh oh! an error occurred!" );
+		
 	}
-	*/
+	
 	
 };
+
+
+
