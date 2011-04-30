@@ -1,0 +1,13 @@
+ColdFusion.js
+
+This project is an experiment in moving some of the ColdFusion Application Framework (Application.cfc) concepts into a Node.js context. This includes centralized hooks into the various events of the ColdFusion.js lifecycle:
+
+onApplicationStart()
+onSessionStart()
+onRequestStart()
+onRequest()
+onRequestEnd()
+onSessionEnd()
+onApplicationEnd()
+
+Like the ColdFusion application framework, session management can be managed on a per-request basis. Cookies can be overriden so that session cookies can be encrypted. 
